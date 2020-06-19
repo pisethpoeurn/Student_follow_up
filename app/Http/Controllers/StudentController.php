@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Image;
 use Illuminate\Http\Request;
+
 
 class StudentController extends Controller
 {
@@ -14,7 +18,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students=Student::all();
+        return view('home',compact("students"));
     }
 
     /**
@@ -35,7 +40,25 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $users=User::find(Auth::id());
+        $students = new Student();
+        $students->firstName = $request->get('fname');
+        $students->lastName = $request->get('lname');
+        $students->class = $request->get('class');
+        $students->description = $request->get('description');
+        if($request->hasFile('pic')){
+            $image = $request->file('pic');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->save( public_path('/uploads/students/' . $filename ) );
+            $students->picture = $filename;
+        }else{
+            return $request;
+            $students->image='';
+        }
+        // $students->picture = $request->get('pic');
+        $students->user_id = $users->id;
+        $students->save();
+        return redirect('home');
     }
 
     /**
