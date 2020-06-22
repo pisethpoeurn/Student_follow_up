@@ -55,7 +55,6 @@ class StudentController extends Controller
             return $request;
             $students->image='';
         }
-        // $students->picture = $request->get('pic');
         $students->user_id = $users->id;
         $students->save();
         return redirect('home');
@@ -67,9 +66,10 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show( $id)
     {
-        //
+    
+       
     }
 
     /**
@@ -90,9 +90,28 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request,$id)
     {
-        //
+       
+        $users=User::find(Auth::id());
+        $students=Student::find($id);
+        $students-> firstName = $request->get('fname');
+        $students-> lastName = $request->get('lname');
+        $students-> class = $request->get('class');
+        $students-> description = $request->get('description');
+        if($request->picture == null){
+            $students -> picture = "student.png";
+        }else {
+            request()->validate([
+                'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $imageName = time().'.'.request()->picture->getClientOriginalExtension();
+            request()->picture->move(public_path('uploads\students'), $imageName);
+            $students -> picture = $imageName;
+        }
+        $students->user_id = $users->id;
+        $students->save();
+        return redirect('home');
     }
 
     /**

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="$ git clone http://github.com/google/material-design-icons/">
 
 <div class="container">
     <div class="row justify-content-center">
@@ -46,13 +45,14 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="description">Description:</label>
-                                      <input type="text" class="form-control" placeholder="Description" name="description">
+                                      <textarea name="description" id=""  class="form-control" cols="10" rows="5"></textarea>
                                     </div>
                                     <div class="form-group">
                                       <label for="picture">Picture:</label>
                                       <input type="file" class="form-control" placeholder="Picture" name="pic">
                                     </div>
                                     <div class="form-group">
+                                      <label for="tutor">Tutor: </label>
                                       <select name="user_id" id="user_id" >
                                           <option value="1">1</option>
                                           <option value="2">2</option>
@@ -88,56 +88,60 @@
                             <td>{{$student->class}}</td>
                             <td>
                                 {{-- ///modal --}}
-                                <a href="" data-toggle="modal" data-target="#myModal">Edit</a>
-                                <!-- The Modal -->
-                                <div class="modal" id="myModal">
-                                    <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <!-- Modal Header -->
-                                        <div class="modal-header text-center">
-                                        <h2 class="modal-title">Edit Student</h2>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <form action="{{route("students.store")}}" method="POST">
-                                                @csrf
-                                                <div class="form-group">
-                                                <label for="fname">firstName:</label>
-                                                <input type="text" class="form-control" placeholder="FirstName" name="fname">
-                                                </div>
-                                                <div class="form-group">
-                                                <label for="lname">lastName:</label>
-                                                <input type="text" class="form-control" placeholder="LastName" name="lname">
-                                                </div>
-                                                <div class="form-group">
-                                                <label for="class">class:</label>
-                                                <input type="text" class="form-control" placeholder="Class" name="class">
-                                                </div>
-                                                <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <input type="text" class="form-control" placeholder="Description" name="description">
-                                                </div>
-                                                <div class="form-group">
-                                                <label for="picture">Picture:</label>
-                                                <input type="file" class="form-control" placeholder="Picture" name="pic">
-                                                </div>
-                                                <div class="form-group">
-                                                <select name="user_id" id="user_id" >
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                </select>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                <button type="button" class="btn btn-danger btn-right" data-dismiss="modal">Close</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                {{-- modalll --}}
-                                <a href=""><i class="material-icons text-danger">delete</i></a>
-                            </td>
+                                  <!-- The Modal -->
+                                  <a href="" data-toggle="modal" data-target="#Modal{{$student->id}}">Edit</a>
+                                  @foreach ($students as $student)
+                                  <div class="modal" id="Modal{{$student->id}}">
+                                      <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <!-- Modal Header -->
+                                          <div class="modal-header text-center">
+                                          <h2 class="modal-title">Edit Student</h2>
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          </div>
+                                          <!-- Modal body -->
+                                          <div class="modal-body">
+                                              <form action="{{route("students.update",$student->id)}}" method="post" enctype="multipart/form-data" >
+                                                  @csrf
+                                                  @method('PUT')
+                                                  <div class="form-group">
+                                                  <label for="fname">firstName:</label>
+                                                  <input type="text" class="form-control" placeholder="FirstName" name="fname" value="{{$student->firstName}}">
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="lname">lastName:</label>
+                                                  <input type="text" class="form-control" placeholder="LastName" name="lname" value="{{$student->lastName}}">
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="class">class:</label>
+                                                  <input type="text" class="form-control" placeholder="Class" name="class" value="{{$student->class}}">
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="description">Description:</label>
+                                                  <textarea name="description" id=""  class="form-control" cols="10" rows="5">{{$student->description}}</textarea>
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="picture">Picture:</label>
+                                                  <input type="file" class="form-control" placeholder="Picture" name="picture">
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="tutor">Tutor: </label>
+                                                  <select name="user_id" id="user_id" >
+                                                      <option value="1">1</option>
+                                                      <option value="2">2</option>
+                                                  </select>
+                                                  </div>
+                                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                                  <button type="button" class="btn btn-danger btn-right" data-dismiss="modal">Close</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  {{-- modalll --}}
+                                  @endforeach
+                                    <a href=""><i class="material-icons text-danger">delete</i></a>
+                                </td>
                             </tr>  
                         @endif
                         @endforeach
@@ -161,7 +165,59 @@
                                 <td>{{$student->firstName}} {{$student->lastName}}</td>
                                 <td>{{$student->class}}</td>
                                 <td>
-                                    <a href=""><i class="material-icons">edit</i></a>
+                                  {{-- ///modal --}}
+                                  <!-- The Modal -->
+                                <a href="" data-toggle="modal" data-target="#Modal{{$student->id}}">Edit</a>
+                                  @foreach ($students as $student)
+                                  <div class="modal" id="Modal{{$student->id}}">
+                                      <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <!-- Modal Header -->
+                                          <div class="modal-header text-center">
+                                          <h2 class="modal-title">Edit Student</h2>
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          </div>
+                                          <!-- Modal body -->
+                                          <div class="modal-body">
+                                              <form action="{{route("students.update",$student->id)}}" method="post" enctype="multipart/form-data" >
+                                                  @csrf
+                                                  @method('PUT')
+                                                  <div class="form-group">
+                                                  <label for="fname">firstName:</label>
+                                                  <input type="text" class="form-control" placeholder="FirstName" name="fname" value="{{$student->firstName}}">
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="lname">lastName:</label>
+                                                  <input type="text" class="form-control" placeholder="LastName" name="lname" value="{{$student->lastName}}">
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="class">class:</label>
+                                                  <input type="text" class="form-control" placeholder="Class" name="class" value="{{$student->class}}">
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="description">Description:</label>
+                                                  <textarea name="description" id=""  class="form-control" cols="10" rows="5">{{$student->description}}</textarea>
+                                                  </div>
+                                                  <div class="form-group">
+                                                  <label for="picture">Picture:</label>
+                                                  <input type="file" class="form-control" placeholder="Picture" name="picture">
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="tutor">Tutor: </label>
+                                                  <select name="user_id" id="user_id" >
+                                                      <option value="1">1</option>
+                                                      <option value="2">2</option>
+                                                  </select>
+                                                  </div>
+                                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                                  <button type="button" class="btn btn-danger btn-right" data-dismiss="modal">Close</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  {{-- modalll --}}
+                                  @endforeach
                                     <a href=""><i class="material-icons text-danger">delete</i></a>
                                 </td>
                             </tr>
