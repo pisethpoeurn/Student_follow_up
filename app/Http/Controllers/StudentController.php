@@ -56,7 +56,6 @@ class StudentController extends Controller
             $students->image='';
         }
         $students->user_id = $users->id;
-        $students->user_id = $request->get('user_id');
         $students->save();
         return redirect('home');
     }
@@ -67,10 +66,9 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( $id)
     {
-        $students=Student::find($id);
-        return view('detailStudents',compact('students'));
+    
        
     }
 
@@ -112,7 +110,6 @@ class StudentController extends Controller
             $students -> picture = $imageName;
         }
         $students->user_id = $users->id;
-        $students->user_id = $request->get('user_id');
         $students->save();
         return redirect('home');
     }

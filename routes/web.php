@@ -20,8 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
 Route::resource('students', 'StudentController');
-Route::get('showComment/{id}','CommentController@index')->name('showComment');
-Route::post('addComment/{id}','CommentController@store')->name('addComment');
-Route::put('editComments/{id}','CommentController@update')->name('editComments');
-Route::get('deleteComments/{id}','CommentController@destroy')->name('deleteComments');
+
+
+Route::get('/home', 'HomeController@index')->name('home');
