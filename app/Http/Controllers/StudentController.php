@@ -135,6 +135,12 @@ class StudentController extends Controller
         return back();
     }
 
-    
+    /// Back to Follow up list
+    public function backToFollowup($id){
+        $students = Student::find($id);
+        $students->activeFollowup = false;
+        $students->save();
+        return back();
+    }
 
 }
