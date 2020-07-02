@@ -155,7 +155,7 @@
                                   </div>
                                   {{-- modalll --}}
                                   @endforeach
-                                  
+                                  <a href="{{route('backFollowup',$student->id)}}" class="text-danger">ToOutFollowUp</a>
                                 </td>
                             </tr>  
                         @endif

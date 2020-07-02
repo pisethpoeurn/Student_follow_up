@@ -26,4 +26,5 @@ Route::post('addComment/{id}','CommentController@store')->name('addComment');
 Route::put('editComments/{id}','CommentController@update')->name('editComments');
 Route::get('deleteComments/{id}','CommentController@destroy')->name('deleteComments');
 Route::get('followup/{id}','StudentController@updateActiveFollowup')->name('followup');
+Route::get('backFollowup/{id}','StudentController@backToFollowup')->name('backFollowup');
 
