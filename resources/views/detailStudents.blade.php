@@ -25,8 +25,6 @@
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
                 <br>
-                <form action="{{route('showComment',$students->id)}}" method="POST">
-                    @csrf
                     @foreach ($students->comments as $item)
                         <strong>{{$students->user->firstName}}</strong>
                         <textarea class="form-control" name="comment" id="comment" cols="150" rows="3" disabled selected >{{$item->comment}}</textarea>
@@ -44,15 +42,15 @@
                                           </div>
                                           <!-- Modal body -->
                                           <div class="modal-body">
-                                              <form action="{{route("editComments",$item->id)}}" method="post" enctype="multipart/form-data" >
+                                              <form action="{{route("editComments",$item->id)}}" method="post" id="{{'comment'.$item->id}}">
                                                   @csrf
-                                                  @method('put')
+                                                  @method('PUT')
                                                   <input type="hidden" name="_method" value="PUT">
                                                   <div class="form-group">
                                                   <label for="comment">Comments:</label>
                                                   <textarea name="comment" id=""  class="form-control" cols="10" rows="5">{{$item->comment}}</textarea>
                                                   </div>
-                                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                                  <button type="submit" class="btn btn-success btn-right">submit</button>
                                                   <button type="button" class="btn btn-danger btn-right" data-dismiss="modal">Close</button>
                                               </form>
                                           </div>
@@ -63,7 +61,6 @@
                         <a href="{{route('deleteComments',$item->id)}}">Delete</a><hr>
                         @endif
                     @endforeach
-                </form>
             </div>      
         </div>
     </div>

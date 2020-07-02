@@ -127,4 +127,14 @@ class StudentController extends Controller
     {
         //
     }
+    ////Update active Follow up
+    public function updateActiveFollowup($id){
+        $students = Student::find($id);
+        $students->activeFollowup= true;
+        $students->save();
+        return back();
+    }
+
+    
+
 }
