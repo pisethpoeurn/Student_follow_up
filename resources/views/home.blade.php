@@ -77,8 +77,8 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                   <div id="home" class="container tab-pane active"><br>
-                    <h2 class="text-center text-success">Follow Up list</h2>
-                    <table class="table table-bordered ">
+                    <h1 class="text-center text-success text-bold">Follow Up list</h1>
+                    <table class="table table-border ">
                         <thead class="text-center">
                             <tr>
                                 <th>Picture</th>
@@ -94,7 +94,7 @@
                             <td>{{$student->firstName}} {{$student->lastName}}</td>
                             <td>{{$student->class}}</td>
                             <td>
-                              <a href="{{route("students.show",$student->id)}}" class="material-icons text-danger">view</a>
+                              <a href="{{route("students.show",$student->id)}}" class=" text-success">view</a>
                                 {{-- ///modal --}}
                                   <!-- The Modal -->
                                   <a href="" data-toggle="modal" data-target="#Modal{{$student->id}}">Edit</a>
@@ -180,7 +180,7 @@
                                 <td>{{$student->firstName}} {{$student->lastName}}</td>
                                 <td>{{$student->class}}</td>
                                 <td>
-                                    <a href="" class="material-icons text-danger">ToFollowUp</a>
+                                <a href="{{route('followup',$student->id)}}" class="material-icons text-danger">ToFollowUp</a>
                                 </td>
                             </tr>
                         @endif        
